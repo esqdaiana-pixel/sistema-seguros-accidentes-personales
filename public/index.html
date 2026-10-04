@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seguros de Accidentes Personales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <aside class="lateral">
+    <div class="marca">
+      <svg class="marca-icono" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M16 3 5 7.5v8.2c0 6.3 4.4 11.1 11 13.3 6.6-2.2 11-7 11-13.3V7.5L16 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="m11 16.2 3.6 3.6L21.5 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <strong>Seguros</strong>
+        <span>Accidentes Personales</span>
+      </div>
+    </div>
+
+    <nav class="menu" aria-label="Secciones">
+      <a href="#resumen">Resumen</a>
+      <a href="#clientes">Clientes</a>
+      <a href="#polizas">Pólizas</a>
+      <a href="#siniestros">Siniestros</a>
+    </nav>
+  </aside>
+
+  <main class="contenido">
+
+    <header class="encabezado" id="resumen">
+      <h1>Sistema de Seguros</h1>
+    </header>
+
+    <section class="dashboard" aria-label="Indicadores">
+      <div class="tarjeta">
+        <h3><i class="punto punto-acento"></i>Clientes</h3>
+        <p id="total-clientes">0</p>
+      </div>
+
+      <div class="tarjeta">
+        <h3><i class="punto punto-ok"></i>Pólizas activas</h3>
+        <p id="polizas-activas">0</p>
+      </div>
+
+      <div class="tarjeta">
+        <h3><i class="punto punto-aviso"></i>Siniestros abiertos</h3>
+        <p id="siniestros-abiertos">0</p>
+      </div>
+
+      <div class="tarjeta">
+        <h3><i class="punto punto-neutro"></i>Siniestros cerrados</h3>
+        <p id="siniestros-cerrados">0</p>
+      </div>
+    </section>
+
+    <section class="graficos">
+      <div class="grafico">
+        <h2>Pólizas por estado</h2>
+        <div class="lienzo"><canvas id="grafico-polizas"></canvas></div>
+      </div>
+
+      <div class="grafico">
+        <h2>Siniestros por tipo</h2>
+        <div class="lienzo"><canvas id="grafico-tipos"></canvas></div>
+      </div>
+
+      <div class="grafico grafico-ancho">
+        <h2>Siniestros por mes</h2>
+        <div class="lienzo"><canvas id="grafico-meses"></canvas></div>
+      </div>
+    </section>
+
+    <!-- CLIENTES -->
+    <section class="seccion" id="clientes">
+      <h2 class="titulo-seccion">Clientes</h2>
+
+      <div class="panel">
+        <h3 class="titulo-form">Nuevo cliente</h3>
+        <form id="form-cliente" class="formulario">
+          <label class="campo">Nombre
+            <input type="text" id="nombre" placeholder="Nombre" required>
+          </label>
+          <label class="campo">Apellido
+            <input type="text" id="apellido" placeholder="Apellido" required>
+          </label>
+          <label class="campo">DNI
+            <input type="text" id="dni" placeholder="DNI" required>
+          </label>
+          <label class="campo">Email
+            <input type="email" id="email" placeholder="Email">
+          </label>
+          <button type="submit" class="boton-principal">Guardar cliente</button>
+        </form>
+      </div>
+
+      <div class="panel panel-tabla">
+        <div class="tabla-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>DNI</th>
+                <th>Email</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="lista-clientes"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- POLIZAS -->
+    <section class="seccion" id="polizas">
+      <h2 class="titulo-seccion">Pólizas</h2>
+
+      <div class="panel">
+        <h3 class="titulo-form">Nueva póliza</h3>
+        <form id="form-poliza" class="formulario">
+          <label class="campo">Número
+            <input type="text" id="numero-poliza" placeholder="Número, por ejemplo: POL-011" required>
+          </label>
+          <label class="campo">ID del cliente
+            <input type="number" id="id-cliente-poliza" placeholder="ID del cliente" min="1" required>
+          </label>
+          <label class="campo">Inicio
+            <input type="date" id="fecha-inicio" required>
+          </label>
+          <label class="campo">Fin
+            <input type="date" id="fecha-fin" required>
+          </label>
+          <label class="campo">Estado
+            <select id="estado-poliza" required>
+              <option value="">Seleccioná un estado</option>
+              <option value="ACTIVA">ACTIVA</option>
+              <option value="VENCIDA">VENCIDA</option>
+              <option value="CANCELADA">CANCELADA</option>
+            </select>
+          </label>
+          <button type="submit" class="boton-principal">Guardar póliza</button>
+        </form>
+      </div>
+
+      <div class="panel panel-tabla">
+        <div class="tabla-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Número de póliza</th>
+                <th>ID cliente</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="lista-polizas"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SINIESTROS -->
+    <section class="seccion" id="siniestros">
+      <h2 class="titulo-seccion">Siniestros</h2>
+
+      <div class="panel">
+        <h3 class="titulo-form">Nuevo siniestro</h3>
+        <form id="form-siniestro" class="formulario">
+          <label class="campo">ID de la póliza
+            <input type="number" id="id-poliza-siniestro" placeholder="ID de la póliza" min="1" required>
+          </label>
+          <label class="campo">Fecha
+            <input type="date" id="fecha-siniestro" required>
+          </label>
+          <label class="campo">Tipo
+            <select id="tipo-siniestro" required>
+              <option value="">Seleccioná el tipo</option>
+              <option value="Accidente laboral">Accidente laboral</option>
+              <option value="Accidente doméstico">Accidente doméstico</option>
+              <option value="Accidente deportivo">Accidente deportivo</option>
+            </select>
+          </label>
+          <label class="campo">Estado
+            <select id="estado-siniestro" required>
+              <option value="">Seleccioná el estado</option>
+              <option value="ABIERTO">ABIERTO</option>
+              <option value="CERRADO">CERRADO</option>
+            </select>
+          </label>
+          <button type="submit" class="boton-principal">Guardar siniestro</button>
+        </form>
+      </div>
+
+      <div class="panel panel-tabla">
+        <div class="tabla-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>ID póliza</th>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="lista-siniestros"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
