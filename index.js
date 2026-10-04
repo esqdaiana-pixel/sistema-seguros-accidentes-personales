@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 
 const express = require('express');
 const { createClient } = require('@libsql/client');
@@ -7,6 +8,10 @@ const app = express();
 
 app.use(express.json());
 app.use(express.static('public'));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 const db = createClient({
   url: process.env.TURSO_DATABASE_URL,
