@@ -36,7 +36,7 @@ app.post('/clientes', async (req, res) => {
 
   res.json({
     mensaje: 'Cliente creado correctamente',
-    id_cliente: resultado.lastInsertRowid
+    id_cliente: Number(resultado.lastInsertRowid)
   });
 });
 
@@ -104,7 +104,7 @@ app.post('/polizas', async (req, res) => {
 
   res.json({
     mensaje: 'Póliza creada correctamente',
-    id_poliza: resultado.lastInsertRowid
+    id_poliza: Number(resultado.lastInsertRowid)
   });
 });
 
@@ -170,7 +170,7 @@ app.post('/siniestros', async (req, res) => {
 
   res.json({
     mensaje: 'Siniestro creado correctamente',
-    id_siniestro: resultado.lastInsertRowid
+    id_siniestro: Number(resultado.lastInsertRowid)
   });
 });
 
